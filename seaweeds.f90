@@ -1,6 +1,8 @@
 module seaweeds
     implicit none
-    type seeweed
+    private
+    public :: seaweed
 
+    type seaweed
     end type
 end module
