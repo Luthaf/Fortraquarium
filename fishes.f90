@@ -8,6 +8,8 @@ module fishes
         logical male
     contains
         procedure :: sex => sex_str
+        procedure :: assign
+        generic :: assignment(=) => assign
     end type
 
 contains
@@ -21,4 +23,12 @@ contains
             sex_str = "female"
         end if
     end function
+
+    subroutine assign(this, other)
+        implicit none
+        class(fish), intent(out) :: this
+        type(fish), intent(in) :: other
+        this%name = other%name
+        this%male = other%male
+    end subroutine
 end module

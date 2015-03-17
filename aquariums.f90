@@ -5,8 +5,8 @@ module aquariums
     integer, parameter :: MAX_FISHES=100, MAX_SEAWEEDS=100
 
     type aquarium
-        type(seaweed), dimension(:), allocatable :: seaweeds
-        type(fish), dimension(:), allocatable :: fishes
+        class(seaweed), dimension(:), allocatable :: seaweeds
+        class(fish), dimension(:), allocatable :: fishes
         integer :: last_seaweed, last_fish, step
     contains
         procedure :: add_fish
