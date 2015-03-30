@@ -28,22 +28,39 @@ contains
         new_aquarium%step = 0
     end function
 
-    subroutine add_fish(this, name, is_male)
+    subroutine add_fish(this, name, sex, regim)
         implicit none
         class(aquarium), intent(inout) :: this
         character(len=*), intent(in) :: name
-        logical, intent(in) :: is_male
-        type(fish), dimension(:), allocatable :: tmp
+        character, intent(in) :: sex, regim
+        class(fish), dimension(:), allocatable :: tmp
+        logical :: is_male
 
         this%last_fish = this%last_fish + 1
         if (this%last_fish == size(this%fishes)) then
             ! reallocate array
-            allocate(tmp(2*size(this%fishes)))
-            tmp(1:size(this%fishes)) = this%fishes
+            allocate(tmp(2*size(this%fishes)), source=this%fishes)
             deallocate(this%fishes)
             call move_alloc(tmp, this%fishes)
         end if
-        this%fishes(this%last_fish) = fish(name, is_male)
+
+        if (sex == 'M') then
+            is_male = .true.
+        else if (sex == 'F') then
+            is_male = .false.
+        else
+            write(*, *) "Error: unknown sex parameter: ", sex
+            return
+        end if
+
+        if (regim == 'F') then
+            this%fishes(this%last_fish) = fishivorous(name, is_male)
+        else if (regim == 'S') then
+            this%fishes(this%last_fish) = herbivorous(name, is_male)
+        else
+            write(*, *) "Error: unknown regim parameter: ", regim
+            return
+        end if
     end subroutine
 
     subroutine add_seaweed(this)

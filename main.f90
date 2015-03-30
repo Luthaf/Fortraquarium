@@ -6,9 +6,9 @@ program fortraquarium
 
     aqua = aquarium()
 
-    call aqua%add_fish("Marcel", .true.)
-    call aqua%add_fish("Sonia", .false.)
-    call aqua%add_fish("Georges", .true.)
+    call aqua%add_fish("Marcel", 'M', 'F')
+    call aqua%add_fish("Sonia", 'F', 'S')
+    call aqua%add_fish("Georges", 'M', 'S')
 
     call aqua%add_seaweed
     call aqua%add_seaweed
